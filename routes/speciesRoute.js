@@ -1,15 +1,21 @@
 const express = require('express');
+const { array } = require('joi');
 const Joi = require('joi');
 const router = express.Router();
 
 const data = require('../controllers/animals');
 
 
-//FUNCIONA 
+
 router.get('/', (req, res) => {
-    res.send(data);
+    let animals =  data.animals
+    let species = JSON.parse(animals.map( animal =>   animal.speciesname));
+     
+
+    res.send(species);
+
   });
-  //FUNCIONA
+
   router.get('/:id', (req, res) => {
     const {id} = req.params;
     res.send(data.get(id));

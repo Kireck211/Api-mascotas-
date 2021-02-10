@@ -15,11 +15,11 @@ const schema = Joi.object({
   location:Joi.string().min(3).required()
 });
 
-//FUNCIONA 
+
 router.get('/', (req, res) => {
   res.send(data);
 });
-//FUNCIONA
+
 router.get('/:id', (req, res) => {
   const {id} = req.params;
   res.send(data.get(id));
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
 });
 
 
-//FUNCIONA 
+
 router.put('/:id', (req, res, next) => {
   const {id} = req.params;
   const {
@@ -50,8 +50,7 @@ router.put('/:id', (req, res, next) => {
 
   res.send(animal);
 });
-
-//FUNCIONA 
+ 
 router.delete('/:id', (req, res) => {
   const {id} = req.params;
 

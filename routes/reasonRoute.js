@@ -4,9 +4,12 @@ const router = express.Router();
 
 const data = require('../controllers/animals');
 
-//FUNCIONA 
+
 router.get('/', (req, res) => {
-    res.send(data);
+    let animals =  data.animals
+    let reason = animals.map( animal =>   animal.intakereason);
+
+    
   });
   //FUNCIONA
   router.get('/:id', (req, res) => {
