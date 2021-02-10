@@ -17,7 +17,6 @@ const schema = Joi.object({
 
 
 router.get('/', (req, res) => {
-  
   res.send(data.animals);
 });
 

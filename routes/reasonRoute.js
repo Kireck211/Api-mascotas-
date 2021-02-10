@@ -7,14 +7,13 @@ const data = require('../controllers/animals');
 
 router.get('/', (req, res) => {
     let animals =  data.animals
-    let reason = animals.map( animal =>   animal.intakereason);
+    let reason = animals.map( animal =>   animal.intakereason); 
+    let arr = [...reason]
 
-    
+    res.send([...new Set(arr)]);
+
+
   });
-  //FUNCIONA
-  router.get('/:id', (req, res) => {
-    const {id} = req.params;
-    res.send(data.get(id));
-  });
+  
 
   module.exports = router;
