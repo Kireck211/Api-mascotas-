@@ -5,7 +5,6 @@ const router = express.Router();
 const data = require('../controllers/animals');
 
 const schema = Joi.object({
-
   animalname:Joi.string().min(3).required(),
   breedname:Joi.string().min(1).required(),
   basecolour: Joi.string().min(3).required(),
@@ -26,27 +25,22 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const {animalname,breedname,basecolour,speciesname,animalage,sexname,location} = req.body;
-
-  const result = schema.validate({animalname,breedname,basecolour,speciesname,animalage,sexname,location});
+  const result = schema.validate(req.body);
   if (result.error) return res.status(400).send(result.error.details[0].message);
 
-  const animal = data.create(animalname,breedname,basecolour,speciesname,animalage,sexname,location);
+  const animal = data.create(id, req.body);
 
   res.send(animal);
 });
 
 
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', (req, res) => {
   const {id} = req.params;
-  const {
-        animalname= '',breedname= '',
-        basecolour= '',speciesname= '',
-        animalage= '',sexname= '',location= ''} = req.body;
-
-  const {animal, err} = data.update(id, animalname,breedname,basecolour,speciesname,animalage,sexname,location);
-  if (err) return next();
+  const result = schema.validate(req.body);
+  if (result.error) return res.status(400).send(result.error.details[0].message);
+  // if (err) return next(); NOTE: if you call next() without arguments express would think it is a successful call, it should be next(err)
+  const animal = data.update(id, req.body);
 
   res.send(animal);
 });

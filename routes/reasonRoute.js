@@ -10,9 +10,7 @@ router.get('/', (req, res) => {
     let reason = animals.map( animal =>   animal.intakereason); 
     let arr = [...reason]
 
-    res.send([...new Set(arr)]);
-
-
+    res.send([...new Set(arr)]); // nice way of uniquify arrays
   });
   
 

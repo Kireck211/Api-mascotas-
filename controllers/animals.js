@@ -1,9 +1,10 @@
 const animals = require('../data/data.json');
+const {defaultIfEmpty} = require('../utils');
 
-function create(animalname,breedname,basecolour,speciesname,animalage,sexname,location) {
+function create(animal) {
     const id = animals.length + 1;
     
-    animals.push({id,animalname,breedname,basecolour,speciesname,animalage,sexname,location});
+    animals.push({id,...animal});
   
     return animals[animals.length-1];
   }
@@ -15,21 +16,12 @@ function create(animalname,breedname,basecolour,speciesname,animalage,sexname,lo
     return animal;
   }
   
-  function update(id,animalname,breedname,basecolour,speciesname,animalage,sexname,location) {
-    try {
+  function update(id, newAnimalProperties) {
       const animal = this.get(id)
-      animal.animalname = animalname.length === 0 ? animal.animalname: animalname;
-      animal.breedname = breedname.length === 0 ? animal.breedname: breedname;
-      animal.basecolour = basecolour.length === 0 ? animal.basecolour: basecolour;
-      animal.speciesname = speciesname.length === 0 ? animal.speciesname: speciesname;
-      animal.animalage = animalage.length === 0 ? animal.animalage: animalage;
-      animal.sexname = sexname.length === 0 ? animal.sexname: sexname;
-      animal.location = location.length === 0 ? animal.location: location;
-
-      return {animal, err: null};
-    } catch (err) {
-      return {err, animal: null}
-    }
+      Object.keys(newAnimalProperties).forEach(function(property) {
+        animal[property] = defaultIfEmpty(newAnimalProperties[property], animal[property]);
+      });
+      return animal;
   }
   
   function get(id) {
